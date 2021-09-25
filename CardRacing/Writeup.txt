@@ -1,10 +1,19 @@
 ﻿2021.09.24
+[u][b]Software[/u][/b]
+Visual Studio 2019
+
+[u][b]Concepts[/u][/b]
+c#
+.NET Core 3.1
+modulus
+
+[u][b]Github Link:[/u][/b]
 
 This spawned from a video of a card game seen here: https://imgur.com/gallery/CfzqrTn    
 
 The rules seem fairly straight forward.
 
- Rules:
+ [u][b]Rules:[/u][/b]
  Standard 52 card deck.
  Arrange the aces in a horizontal line face up.
  Shuffle the deck.
@@ -16,7 +25,7 @@ The rules seem fairly straight forward.
  
  The win condition: first ace to cross the line wins.
  
- Extra rules:
+ [u][b]Extra rules:[/u][/b]
  When one ace is the last in a given row, and there is a face down row card, show that card.
  Move that corresponding suit's ace BACK one spot.
  Discard the card.
@@ -33,14 +42,14 @@ The rules seem fairly straight forward.
  34 mod 13 is 8; the face value.
  49 mod 13 is 11; a Jack!
 
- The suit is all about betweens.
+ The suit is all about between.
 
  0 >= 0 and 0 < 13 so we can determine that 0 is a club.
  22 >= 13 and 22 < 26 so that plunks 22 down in Diamonds territory.
  34 >= 16 and 34 < 39 so that plunks 34 down in Hearts territory.
  45 >= 39 and 45 < 52 so that plunks 45 down in Spades territory.
 
- The fun part is this concept is transportable to most any other 52 card based games, like War, Solitare, poker, Spades, etc.
+ The fun part is this concept is transportable to most any other 52 card based games, like War, Solitaire, poker, Spades, etc.
 
  [u][b]Design[/u][/b]
 
