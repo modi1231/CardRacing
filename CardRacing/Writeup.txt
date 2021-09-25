@@ -1,0 +1,446 @@
+﻿2021.09.24
+
+This spawned from a video of a card game seen here: https://imgur.com/gallery/CfzqrTn    
+
+The rules seem fairly straight forward.
+
+ Rules:
+ Standard 52 card deck.
+ Arrange the aces in a horizontal line face up.
+ Shuffle the deck.
+ Pull out 5 cards, face down, and arrange them vertically (perpendicular) to the aces.  Start one row above the aces.
+ Each turn consists of: 
+ -- pulling the top card from the draw pile, 
+ -- revealing the card
+ -- move the corresponding suit's ace up one row.
+ 
+ The win condition: first ace to cross the line wins.
+ 
+ Extra rules:
+ When one ace is the last in a given row, and there is a face down row card, show that card.
+ Move that corresponding suit's ace BACK one spot.
+ Discard the card.
+ 
+ [u][b]Key Concept - implied values[/u][/b]
+
+ The application of the rules was a bit tricky, but ultimately this was a fun exercise.  It leans heavily into the concept that a list of 52 integers can singularly represent all the cards in a deck for value and suit.
+
+ The face value is determined using 'mod 13', and the suit by comparing the value for every 13 values.
+
+ Examples:
+ Integer 0 mod 13 is 0 so we know that's an Ace.  Same as 13 mod 13 is 0, 26 mod 13 is 0 and 39 mod 13 is 0.
+
+ 34 mod 13 is 8; the face value.
+ 49 mod 13 is 11; a Jack!
+
+ The suit is all about betweens.
+
+ 0 >= 0 and 0 < 13 so we can determine that 0 is a club.
+ 22 >= 13 and 22 < 26 so that plunks 22 down in Diamonds territory.
+ 34 >= 16 and 34 < 39 so that plunks 34 down in Hearts territory.
+ 45 >= 39 and 45 < 52 so that plunks 45 down in Spades territory.
+
+ The fun part is this concept is transportable to most any other 52 card based games, like War, Solitare, poker, Spades, etc.
+
+ [u][b]Design[/u][/b]
+
+ The design is a little broad, but not too deep.
+
+ Everything is controlled in the backend by the numerical 0-51 values, and only displayed pretty in the print statements.  This is all housed in the Utilities_Cards class, and, for hte most part, can be plunked down in any future project.
+
+ TheGame class contains the lists (or "decks") for cards to draw, the discard pile as well as the board.  This is all tightly coupled to this specific game's rules.
+
+ MyBoard class is all about tracking the aces, the hidden row cards, and the GUI display.  Again, this is tightly coupled with this specific game's display and rules.
+
+ The crux of the game rules are applied in the TheGame class's method 'RunTheGame'.
+
+ Here is an example of a run:
+
+The initial display:
+[code]
+  C  D  H  S | START
+----------------------
+            | C1
+            | H3
+            | H4
+            | H2
+            | D7
+======================
+            | FINISH
+Press any key for the turn;
+
+[/code]
+
+[spoiler]
+
+[code]
+Round: 1
+************
+Discard: Diamonds : Jack        (id: 23)
+Deck Remaining: 42
+ C     H  S | START
+----------------------
+    D       |  *
+            |  *
+            |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 2
+************
+Discard: Spades : Jack  (id: 49)
+Deck Remaining: 41
+ C     H    | START
+----------------------
+    D     S |  *
+            |  *
+            |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 3
+************
+Discard: Hearts : 6     (id: 31)
+Deck Remaining: 40
+ C          | START
+----------------------
+    D  H  S |  *
+            |  *
+            |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 4
+************
+Discard: Spades : Queen (id: 50)
+Deck Remaining: 39
+ C          | START
+----------------------
+    D  H    |  *
+          S |  *
+            |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 5
+************
+Discard: Diamonds : 3   (id: 15)
+Deck Remaining: 38
+ C          | START
+----------------------
+       H    |  *
+    D     S |  *
+            |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 6
+************
+Discard: Clubs : Jack   (id: 10)
+Deck Remaining: 37
+            | START
+----------------------
+ C     H    |  *
+    D     S |  *
+            |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 7
+************
+Discard: Diamonds : 8   (id: 20)
+Deck Remaining: 36
+            | START
+----------------------
+ C     H    |  *
+          S |  *
+    D       |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 8
+************
+Discard: Clubs : Queen  (id: 11)
+            | START
+----------------------
+       H    |
+ C        S |  *
+    D       |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Row card - Move Back: Clubs : 10        (id: 09)
+Deck Remaining: 35
+            | START
+----------------------
+ C     H    |
+          S |  *
+    D       |  *
+            |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 9
+************
+Discard: Diamonds : 9   (id: 21)
+Deck Remaining: 34
+            | START
+----------------------
+ C     H    |
+          S |  *
+            |  *
+    D       |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 10
+************
+Discard: Hearts : 9     (id: 34)
+Deck Remaining: 33
+            | START
+----------------------
+ C          |
+       H  S |  *
+            |  *
+    D       |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 11
+************
+Discard: Clubs : 5      (id: 04)
+Deck Remaining: 32
+            | START
+----------------------
+            |
+ C     H  S |  *
+            |  *
+    D       |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 12
+************
+Discard: Hearts : Queen (id: 37)
+Deck Remaining: 31
+            | START
+----------------------
+            |
+ C        S |  *
+       H    |  *
+    D       |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 13
+************
+Discard: Spades : 2     (id: 40)
+            | START
+----------------------
+            |
+ C          |
+       H  S |  *
+    D       |  *
+            |  *
+======================
+            | FINISH
+
+Row card - Move Back: Hearts : 3        (id: 28)
+Deck Remaining: 30
+            | START
+----------------------
+            |
+ C     H    |
+          S |  *
+    D       |  *
+            |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 14
+************
+Discard: Diamonds : 10  (id: 22)
+Deck Remaining: 29
+            | START
+----------------------
+            |
+ C     H    |
+          S |  *
+            |  *
+    D       |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 15
+************
+Discard: Clubs : 4      (id: 03)
+Deck Remaining: 28
+            | START
+----------------------
+            |
+       H    |
+ C        S |  *
+            |  *
+    D       |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 16
+************
+Discard: Clubs : 8      (id: 07)
+Deck Remaining: 27
+            | START
+----------------------
+            |
+       H    |
+          S |  *
+ C          |  *
+    D       |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 17
+************
+Discard: Spades : 5     (id: 43)
+Deck Remaining: 26
+            | START
+----------------------
+            |
+       H    |
+            |  *
+ C        S |  *
+    D       |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 18
+************
+Discard: Clubs : 7      (id: 06)
+Deck Remaining: 25
+            | START
+----------------------
+            |
+       H    |
+            |  *
+          S |  *
+ C  D       |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 19
+************
+Discard: Hearts : 8     (id: 33)
+            | START
+----------------------
+            |
+            |
+       H    |
+          S |  *
+ C  D       |  *
+======================
+            | FINISH
+
+Row card - Move Back: Hearts : 4        (id: 29)
+Deck Remaining: 24
+            | START
+----------------------
+            |
+       H    |
+            |
+          S |  *
+ C  D       |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 20
+************
+Discard: Hearts : 7     (id: 32)
+Deck Remaining: 23
+            | START
+----------------------
+            |
+            |
+       H    |
+          S |  *
+ C  D       |  *
+======================
+            | FINISH
+
+Press any key for the turn;
+
+Round: 21
+************
+Discard: Clubs : 9      (id: 08)
+Deck Remaining: 22
+            | START
+----------------------
+            |
+            |
+       H    |
+          S |  *
+    D       |  *
+======================
+ C          | FINISH
+
+Winner is: Clubs
+[/code]
+[/spoiler]
