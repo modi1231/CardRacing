@@ -7,7 +7,7 @@ c#
 .NET Core 3.1
 modulus
 
-[u][b]Github Link:[/u][/b]
+[u][b]Github Link:[/u][/b] https://github.com/modi1231/CardRacing/
 
 This spawned from a video of a card game seen here: https://imgur.com/gallery/CfzqrTn    
 
